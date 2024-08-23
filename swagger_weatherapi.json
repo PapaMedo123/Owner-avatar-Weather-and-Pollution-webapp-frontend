@@ -1,0 +1,388 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Weather_Application_Backend",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/city/all": {
+      "get": {
+        "tags": [
+          "BaseCity"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/City"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/City"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/City"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/city/nearest": {
+      "get": {
+        "tags": [
+          "BaseCity"
+        ],
+        "parameters": [
+          {
+            "name": "longitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "latitude",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "City": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "stations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Station"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Forecast": {
+        "required": [
+          "forecastTime",
+          "stationId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "forecastTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pM10": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM2_5": {
+            "type": "number",
+            "format": "float"
+          },
+          "co": {
+            "type": "number",
+            "format": "float"
+          },
+          "sO2": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForecastDto": {
+        "type": "object",
+        "properties": {
+          "forecastTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "co": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM2_5": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM10": {
+            "type": "number",
+            "format": "float"
+          },
+          "sO2": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Measurement": {
+        "required": [
+          "measurementTime",
+          "stationId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "measurementTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "aqi": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM10": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM2_5": {
+            "type": "number",
+            "format": "float"
+          },
+          "co": {
+            "type": "number",
+            "format": "float"
+          },
+          "sO2": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeasurementDto": {
+        "type": "object",
+        "properties": {
+          "measurementTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "aqi": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM10": {
+            "type": "number",
+            "format": "float"
+          },
+          "pM2_5": {
+            "type": "number",
+            "format": "float"
+          },
+          "co": {
+            "type": "number",
+            "format": "float"
+          },
+          "sO2": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Station": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "cityId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "measurements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Measurement"
+            },
+            "nullable": true
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Forecast"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cityName": {
+            "type": "string",
+            "nullable": true
+          },
+          "stationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "measurements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementDto"
+            },
+            "nullable": true
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForecastDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
